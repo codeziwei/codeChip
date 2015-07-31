@@ -1,0 +1,34 @@
+
+@if (this.Request.QueryString.Count > 0)
+{
+    <script>
+
+        //参数根据url初始化
+        var para = [];
+        @foreach (string item in this.Request.QueryString.Keys)
+	        {
+            <text>
+        para.push(["@item", "@this.Request.QueryString[item]"]);
+        </text>
+            }
+
+        for (var i = 0; i < para.length; i++) {
+            $("#" + para[i][0]).val(para[i][1]);
+        }
+    </script>
+}
+<script>
+//根据条件查询
+    $("#search").click(function () {
+        var url = "@(this.Request.Url.AbsolutePath)?";
+        var $para = $('#para input[type!="button"]')
+        for (var i = 0; i < $para.length; i++) {
+            url += $($para[i]).attr("id") + "=" + $($para[i]).val();
+            if ((i + 1) != $para.length) {
+                url += "&"
+            }
+        }
+        window.location.href = url;
+
+    })
+    </script>
